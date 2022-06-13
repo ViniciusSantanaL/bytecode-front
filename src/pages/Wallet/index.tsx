@@ -7,9 +7,11 @@ import { http } from '../../service/api'
 import { TokenDTO } from '../../service/Auth/TokenDTO'
 import CreateBaseWallet from '../../components/Wallet/CreateBaseWallet'
 import CreateFragment from '../../components/Wallet/CreateFragment/CreateFragment'
+import { IAvailableCoin } from '../../types/IAvailableCoins'
 
 export default function Wallet() {
   const [wallet, setWallet] = useState<IWallet>()
+  const [availableCoins, setAvailableCoins] = useState<IAvailableCoin[]>([])
 
   async function getWallet() {
     const token = localStorage.getItem('@ByteCode:Token') as string
@@ -22,13 +24,20 @@ export default function Wallet() {
     return promise.data
   }
 
+  async function availableCoinsApi() {
+    const promise = await http.get<IAvailableCoin[]>('/coin/available')
+    return promise.data
+  }
+
   useEffect(() => {
-    const response = getWallet()
-    response
+    const responseWallet = getWallet()
+    responseWallet
       .then((data) => setWallet(data))
       .catch((err) => {
         setWallet(undefined)
       })
+    const responseAvailableCoin = availableCoinsApi()
+    responseAvailableCoin.then((data) => setAvailableCoins(data))
   }, [])
 
   return (
@@ -37,7 +46,7 @@ export default function Wallet() {
         <h1 className="title">Wallet</h1>
       </div>
       {!wallet && <CreateBaseWallet setWallet={setWallet} />}
-      {wallet && <BaseWallet baseSymbolBalance={wallet.baseSymbolBalance} walletBalance={wallet.walletBalance} />}
+      {wallet && <BaseWallet baseSymbolBalance={wallet.baseSymbolBalance} walletBalance={wallet.walletBalance} availableCoins={availableCoins} />}
       <hr />
       {wallet && <CreateFragment setWallet={setWallet} baseWalletSymbol={wallet.baseSymbolBalance} />}
       {wallet && <FragmentsWallet fragments={wallet.walletFragments} />}

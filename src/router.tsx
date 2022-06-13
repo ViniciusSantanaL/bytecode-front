@@ -10,6 +10,7 @@ import Footer from 'components/Footer'
 import Coin from './pages/Coin/index.'
 import NotFound from './pages/NotFound'
 import Wallet from './pages/Wallet'
+import Transactions from './pages/Transactions'
 
 const PrivateOutlet: FC = ({ children }: any) => {
   const { isLoading, token } = useAuth()
@@ -64,6 +65,7 @@ export default function AppRouter() {
           <Route index element={<Home />} />
           <Route path={'/coin'} element={<Coin />} />
           <Route path={'/wallet'} element={<Wallet />} />
+          <Route path={'/transactions'} element={<Transactions />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

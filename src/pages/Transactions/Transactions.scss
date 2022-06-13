@@ -1,0 +1,39 @@
+@import 'src/styles/variables';
+@import 'src/styles/breakpoits';
+@import url('https://fonts.googleapis.com/css2?family=Manjari&display=swap');
+.container-home {
+
+  padding: 80px $padding-horizontal;
+  @media (max-width: $desktop_xsm) {
+    padding: 20px $padding-horizontal-mobile;
+  }
+  @media (min-width: $desktop_xsm) and (max-width: $desktop_sm) {
+    padding: 20px $padding-horizontal-sm;
+  }
+  @media (min-width: $desktop_sm) and (max-width: $desktop_md) {
+    padding: 20px $padding-horizontal-md;
+  }
+  font-family: 'Manjari', sans-serif;
+
+}
+
+.title {
+  font-size: 4rem;
+  padding-bottom: 60px;
+}
+.title-sub {
+  font-size: 2rem;
+  padding-bottom: 30px;
+}
+.button {
+  width: 200px;
+  padding: 5px;
+  font-size: 25px;
+}
+.button-padding{
+  padding: 30px;
+}
+
+.table-transaction {
+  padding-top: 40px
+}

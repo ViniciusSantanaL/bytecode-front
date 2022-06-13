@@ -18,6 +18,7 @@ interface Props {
 export default function ExchangeCoins({ actualFromCoin, actualToCoin, setActualToCoin, setResultTrade }: Props) {
   const [exchangeCoin, setExchangeCoin] = useState<IExchangeRates>()
   const setExchangeRate = useSetRecoilState<IExchangeRates>(exchangeRateFromBaseCoin)
+
   async function availableCoinsApi() {
     const promise = await http.get<IExchangeRates>('/rate/all', {
       params: {

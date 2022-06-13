@@ -21,7 +21,7 @@ export default function TableTrades({ userTrades, setUserTrades, tradeForm, setR
       const rateCoin = coin?.rate
       let result = 0
       if (rateCoin) {
-        result = tradeForm.amount / rateCoin
+        result = rateCoin > 1 ? tradeForm.amount * rateCoin : tradeForm.amount / rateCoin
         setResultTrade(result)
       }
       const trade: IUserTrade = {

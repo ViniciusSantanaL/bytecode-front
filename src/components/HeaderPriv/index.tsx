@@ -17,8 +17,8 @@ export default function HeaderPriv() {
       to: '/wallet'
     },
     {
-      label: 'About',
-      to: '/about'
+      label: 'Transactions',
+      to: '/transactions'
     }
   ]
 
