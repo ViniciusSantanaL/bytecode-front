@@ -1,11 +1,11 @@
-import Input from '../Input/Input'
+import Input from '../../Input/Input'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ICurrentRate } from '../../types/ICurrentRate'
-import { http } from '../../service/api'
-import { IExchangeRates } from '../../types/IExchangeRates'
-import { TokenDTO } from '../../service/Auth/TokenDTO'
-import { IWallet } from '../../types/IWallet'
+import { ICurrentRate } from '../../../types/ICurrentRate'
+import { http } from '../../../service/api'
+import { IExchangeRates } from '../../../types/IExchangeRates'
+import { TokenDTO } from '../../../service/Auth/TokenDTO'
+import { IWallet } from '../../../types/IWallet'
 
 interface Props {
   baseWalletSymbol: string

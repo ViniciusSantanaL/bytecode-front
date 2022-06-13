@@ -1,5 +1,10 @@
-export interface CoinSearchInterface {
-  symbols?: string | null
-  page?: number | null
-  size?: number | null
+import { InfoCoins } from '../state/atom'
+
+export interface ICoinPageableResponse {
+  content: Array<InfoCoins>
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  numberOfElements: number
 }

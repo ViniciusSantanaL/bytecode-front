@@ -1,7 +1,7 @@
-export interface IUserTrades {
+export interface IUserTrade {
   symbolFrom: string
   symbolTo: string
   amount: number
-  rate: bigint
-  result: bigint
+  rate: number
+  result: number
 }

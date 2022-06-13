@@ -5,7 +5,7 @@ interface Props {
 
 export default function BaseWallet({ baseSymbolBalance, walletBalance }: Props) {
   return (
-    <div className="card border-left-success shadow h-100 py-2">
+    <div className="card border-left-success shadow h-100 py-2 mb-3">
       <div className="card-body">
         <div className="row no-gutters align-items-center">
           <div className="col mr-2">
