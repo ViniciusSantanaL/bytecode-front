@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const http = axios.create({
-  baseURL: 'https://bytecode-front.herokuapp.com/'
+  baseURL: 'https://bytecode-front.herokuapp.com/api/'
 })
 
 export const HttpPrivate = axios.create({
