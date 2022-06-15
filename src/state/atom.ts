@@ -1,5 +1,6 @@
 import { atom } from 'recoil'
 import { IExchangeRates } from '../types/IExchangeRates'
+import getBaseSymbolWallet from '../service/WalletService'
 
 export interface InfoCoins {
   id: number
@@ -15,6 +16,6 @@ export const exchangeRateFromBaseCoin = atom<IExchangeRates>({
   key: 'exchangeRateFromBaseCoin',
   default: {
     baseSymbol: '',
-    coinsBase: [{ symbol: '', rate: 0 }]
+    coinsBase: [{ symbol: '', rate: '0.000000' }]
   }
 })

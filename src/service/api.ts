@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 export const http = axios.create({
-  baseURL: 'http://localhost:8080/api/'
+  baseURL: 'https://bytecode-front.herokuapp.com/'
 })
 
 export const HttpPrivate = axios.create({
-  baseURL: 'http://localhost:8080/api/',
+  baseURL: 'https://bytecode-front.herokuapp.com/api/',
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true
 })

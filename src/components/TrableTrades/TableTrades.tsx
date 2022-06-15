@@ -18,17 +18,19 @@ export default function TableTrades({ userTrades, setUserTrades, tradeForm, setR
   useEffect(() => {
     if (tradeForm) {
       const coin = exchangeRates.coinsBase.find((coin) => coin.symbol == tradeForm.symbolTo)
-      const rateCoin = coin?.rate
+
       let result = 0
-      if (rateCoin) {
-        result = rateCoin > 1 ? tradeForm.amount * rateCoin : tradeForm.amount / rateCoin
+      let rateCoin = 0
+      if (coin) {
+        rateCoin = parseFloat(coin?.rate)
+        result = tradeForm.amount * rateCoin
         setResultTrade(result)
       }
       const trade: IUserTrade = {
         symbolFrom: tradeForm.symbolFrom,
         symbolTo: tradeForm.symbolTo,
         amount: tradeForm.amount,
-        rate: rateCoin ? rateCoin : 0,
+        rate: rateCoin.toString(),
         result: result
       }
       setUserTrades((oldTrades) => [...oldTrades, trade])
@@ -54,7 +56,7 @@ export default function TableTrades({ userTrades, setUserTrades, tradeForm, setR
             <td>{trade.symbolFrom}</td>
             <td>{trade.symbolTo}</td>
             <td>{trade.rate.toString()} $</td>
-            <td>{trade.result.toString()} $</td>
+            <td>{trade.result.toFixed(2)} $</td>
           </tr>
         ))}
       </tbody>

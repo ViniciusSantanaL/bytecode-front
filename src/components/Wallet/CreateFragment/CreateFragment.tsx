@@ -34,7 +34,7 @@ export default function CreateFragment({ baseWalletSymbol, setWallet }: Props) {
     response.then((data) => {
       setExchangeCoin(data)
     })
-  }, [])
+  }, [baseWalletSymbol])
 
   async function createFragment(symbol: string, balance: number) {
     const token = localStorage.getItem('@ByteCode:Token') as string
@@ -57,7 +57,9 @@ export default function CreateFragment({ baseWalletSymbol, setWallet }: Props) {
   function onSubmit({ balance }: FragmentWalletForm) {
     if (balance && actualToCoin) {
       const response = createFragment(actualToCoin.symbol, balance)
-      response.then((data) => setWallet(data))
+      response.then((data) => {
+        setWallet(data)
+      })
     }
   }
   return (
@@ -90,7 +92,7 @@ export default function CreateFragment({ baseWalletSymbol, setWallet }: Props) {
           </div>
         </div>
         <div className="form-group">
-          <Input register={register} type="number" name="balance" className="form-control form-control-user" placeholder="Balance" />
+          <Input register={register} type="number" step="0.1" name="balance" className="form-control form-control-user" placeholder="Balance" required />
         </div>
 
         <button type="submit" className="btn btn-primary btn-user btn-block">

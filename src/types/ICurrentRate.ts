@@ -1,4 +1,4 @@
 export interface ICurrentRate {
   symbol: string
-  rate: number
+  rate: string
 }

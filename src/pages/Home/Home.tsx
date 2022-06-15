@@ -36,7 +36,7 @@ export default function Home() {
             <div id="fromCoin" className="d-flex justify-content-start">
               <AvailableCoins actualFromCoin={actualFromCoin} setActualFromCoin={setActualFromCoin} setResultTrade={setResultTrade} />
               <div className="input-group">
-                <Input register={register} name="amount" type="number" id="typeNumber" placeholder="Amount" className="form-control" />
+                <Input register={register} name="amount" type="number" step=".01" id="typeNumber" placeholder="Amount" className="form-control" required />
                 <div className="input-group-append">
                   <span className="input-group-text">$</span>
                 </div>
@@ -44,9 +44,17 @@ export default function Home() {
             </div>
             <AiOutlineArrowRight size={40} />
             <div id="fromCoin" className="d-flex justify-content-start">
-              <ExchangeCoins actualFromCoin={actualFromCoin} actualToCoin={actualToCoin} setActualToCoin={setActualToCoin} setResultTrade={setResultTrade} />
+              <ExchangeCoins actualFromCoin={actualFromCoin?.symbol} actualToCoin={actualToCoin?.symbol} setActualToCoin={setActualToCoin} setResultTrade={setResultTrade} />
               <div className="input-group">
-                <Input register={register} name="amountFromCoin" type="number" id="typeNumber" placeholder={`${resultTrade ? resultTrade : 'Result'}`} className="form-control" disabled />
+                <Input
+                  register={register}
+                  name="amountFromCoin"
+                  type="number"
+                  id="typeNumber"
+                  placeholder={`${resultTrade && actualToCoin ? resultTrade.toFixed(2) : 'Result'}`}
+                  className="form-control"
+                  disabled
+                />
                 <div className="input-group-append">
                   <span className="input-group-text">$</span>
                 </div>

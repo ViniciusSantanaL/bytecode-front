@@ -3,7 +3,7 @@ export interface ITransaction {
   amount: number
   fromSymbol: string
   toSymbol: string
-  rate: number
-  result: number
+  rate: string
+  result: string
   register: Date
 }

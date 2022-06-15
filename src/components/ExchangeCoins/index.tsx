@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TokenDTO } from '../../service/Auth/TokenDTO'
 import { http } from '../../service/api'
-import { IAvailableCoin } from 'types/IAvailableCoins'
 import './ExchangeCoins.scss'
 import { IExchangeRates } from '../../types/IExchangeRates'
 import { ICurrentRate } from '../../types/ICurrentRate'
@@ -9,36 +7,48 @@ import { useSetRecoilState } from 'recoil'
 import { exchangeRateFromBaseCoin } from '../../state/atom'
 
 interface Props {
-  actualFromCoin: IAvailableCoin | null
-  actualToCoin: ICurrentRate | null
+  actualFromCoin: string | undefined
+  actualToCoin: string | undefined
+  isTransaction?: boolean
   setActualToCoin: React.Dispatch<React.SetStateAction<ICurrentRate | null>>
-  setResultTrade: React.Dispatch<React.SetStateAction<number | undefined>>
+  setResultTrade?: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-export default function ExchangeCoins({ actualFromCoin, actualToCoin, setActualToCoin, setResultTrade }: Props) {
+export default function ExchangeCoins({ actualFromCoin, actualToCoin, isTransaction, setActualToCoin, setResultTrade }: Props) {
   const [exchangeCoin, setExchangeCoin] = useState<IExchangeRates>()
   const setExchangeRate = useSetRecoilState<IExchangeRates>(exchangeRateFromBaseCoin)
 
   async function availableCoinsApi() {
     const promise = await http.get<IExchangeRates>('/rate/all', {
       params: {
-        base: actualFromCoin?.symbol
+        base: actualFromCoin
       }
     })
     return promise.data
   }
   useEffect(() => {
     if (actualFromCoin) {
-      setActualToCoin(null)
       const response = availableCoinsApi()
 
       response.then((data) => {
-        setExchangeCoin(data)
-        setExchangeRate(data)
-        setResultTrade(undefined)
+        if (isTransaction) {
+          data.coinsBase.unshift({ symbol: actualFromCoin, rate: '1' })
+
+          setExchangeCoin(data)
+          setExchangeRate(data)
+        } else {
+          setExchangeCoin(data)
+          setExchangeRate(data)
+        }
+        if (setResultTrade) {
+          setResultTrade(undefined)
+        }
       })
     } else {
-      setResultTrade(undefined)
+      setActualToCoin(null)
+      if (setResultTrade) {
+        setResultTrade(undefined)
+      }
       setExchangeCoin({ baseSymbol: '', coinsBase: [] })
     }
   }, [actualFromCoin])
@@ -46,7 +56,7 @@ export default function ExchangeCoins({ actualFromCoin, actualToCoin, setActualT
     <div className="dropdown-size">
       <div className="dropdown">
         <button className="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {actualToCoin ? actualToCoin.symbol : 'Select Coin To'}
+          {actualToCoin ? actualToCoin : 'Select Coin To'}
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a className="dropdown-item" onClick={() => setActualToCoin(null)}>
@@ -58,7 +68,9 @@ export default function ExchangeCoins({ actualFromCoin, actualToCoin, setActualT
               key={index}
               onClick={() => {
                 setActualToCoin(exchangeRate)
-                setResultTrade(undefined)
+                if (setResultTrade) {
+                  setResultTrade(undefined)
+                }
               }}
             >
               {exchangeRate.symbol}

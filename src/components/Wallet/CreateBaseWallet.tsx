@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { IWallet } from '../../types/IWallet'
 import Input from '../Input/Input'
-import { Link } from 'react-router-dom'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { IAvailableCoin } from '../../types/IAvailableCoins'
 import { http } from '../../service/api'
 import { TokenDTO } from '../../service/Auth/TokenDTO'
@@ -44,11 +43,13 @@ export default function CreateBaseWallet({ setWallet }: Props) {
   }
   useEffect(() => {
     const response = availableCoinsApi()
-    response.then((data) => setAvailableCoins(data))
+    response.then((data) => setAvailableCoins(data.filter((sym) => sym.symbol !== 'test')))
   }, [])
 
   function onSubmit({ balance }: BaseWalletForm) {
     if (balance && actualFromCoin) {
+      console.log(actualFromCoin)
+      console.log(balance)
       const response = createWallet(actualFromCoin.symbol, balance)
       response.then((data) => setWallet(data))
     }
